@@ -87,12 +87,4 @@ public class OrderService {
 
         return HttpStatus.OK;
     }
-
-    public void addCargoToOrder(Long orderId, Long clientId) {
-        final Order order = orderRepository.getOne(orderId);
-
-        order.setClient(clientRepository.getOne(clientId));
-
-        orderRepository.save(order);
-    }
 }
