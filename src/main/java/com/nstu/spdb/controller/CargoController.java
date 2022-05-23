@@ -34,13 +34,13 @@ public class CargoController {
 
     @ResponseBody
     @PostMapping(value = "cargo/update", produces = "application/json", consumes = "application/json")
-    public ResponseEntity updateInvoiceByCargoId(@RequestBody InvoiceDto invoiceDto, @PathVariable("cargoId") Long cargoId) {
+    public ResponseEntity updateInvoiceByCargoId(@RequestBody InvoiceDto invoiceDto, @RequestParam("cargoId") Long cargoId) {
         if (invoiceDto == null) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
         Invoice invoice = invoiceService.createAndSave(invoiceDto);
-        cargoService.updateInvoice(invoice, cargoId);
+        cargoService.updateInvoice(invoice, Long.valueOf(cargoId));
 
         return new ResponseEntity(HttpStatus.OK);
     }

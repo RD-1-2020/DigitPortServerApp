@@ -3,8 +3,8 @@ package com.nstu.spdb.service;
 import com.nstu.spdb.dto.CargoDto;
 import com.nstu.spdb.entity.Cargo;
 import com.nstu.spdb.entity.Invoice;
-import com.nstu.spdb.entity.Order;
 import com.nstu.spdb.repository.CargoRepository;
+import com.nstu.spdb.repository.OrderRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +21,9 @@ public class CargoService {
 
     @Autowired
     private CargoRepository cargoRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Autowired
     private InvoiceService invoiceService;
@@ -110,8 +113,5 @@ public class CargoService {
 
         cargo.setInvoice(invoice);
         cargoRepository.save(cargo);
-
-        final Order order = cargoRepository.getOrderByCargoId(cargoId);
-        orderService.updateOrderStatusIfNeed(order);
     }
 }

@@ -95,23 +95,4 @@ public class OrderService {
 
         orderRepository.save(order);
     }
-
-    public void updateOrderStatusIfNeed(Order order) {
-        if (order == null || OrderStatus.READY.equals(order.getOrderStatus())) {
-            return;
-        }
-
-        boolean isReadyOrder = true;
-        for (Cargo cargoFromOrder : order.getCargos()) {
-            if (cargoFromOrder.getInvoice() == null) {
-                isReadyOrder = false;
-                break;
-            }
-        }
-
-        if (isReadyOrder) {
-            order.setOrderStatus(OrderStatus.READY);
-            orderRepository.save(order);
-        }
-    }
 }
