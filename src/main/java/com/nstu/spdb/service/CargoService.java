@@ -2,6 +2,8 @@ package com.nstu.spdb.service;
 
 import com.nstu.spdb.dto.CargoDto;
 import com.nstu.spdb.entity.Cargo;
+import com.nstu.spdb.entity.Invoice;
+import com.nstu.spdb.entity.Order;
 import com.nstu.spdb.repository.CargoRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -22,6 +24,9 @@ public class CargoService {
 
     @Autowired
     private InvoiceService invoiceService;
+
+    @Autowired
+    private OrderService orderService;
 
     public Cargo createFromDto(CargoDto cargoDto) {
         if (cargoDto == null) {
@@ -81,5 +86,32 @@ public class CargoService {
         }
 
         return savedCargos;
+    }
+
+    public List<CargoDto> getAllCargosWithoutInvoice() {
+        final List<Cargo> invoiceNotNull = cargoRepository.getAllByInvoiceNull();
+        if (invoiceNotNull == null) {
+            return null;
+        }
+
+        List<CargoDto> cargoDtos = new ArrayList<>();
+        invoiceNotNull.forEach(cargo -> {
+            cargoDtos.add(new CargoDto(cargo));
+        });
+
+        return cargoDtos;
+    }
+
+    public void updateInvoice(Invoice invoice, Long cargoId) {
+        final Cargo cargo = cargoRepository.getOne(cargoId);
+        if (cargo == null) {
+            return;
+        }
+
+        cargo.setInvoice(invoice);
+        cargoRepository.save(cargo);
+
+        final Order order = cargoRepository.getOrderByCargoId(cargoId);
+        orderService.updateOrderStatusIfNeed(order);
     }
 }

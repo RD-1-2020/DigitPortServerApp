@@ -3,11 +3,10 @@ package com.nstu.spdb.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 @Entity
 @Table
-public class Client extends AbstractPersistableIdentity<Long> implements Serializable {
+public class Client extends AbstractPersistableIdentity<Long> {
 
     @Column
     private String fullName;

@@ -1,6 +1,7 @@
 package com.nstu.spdb.dto;
 
 import com.nstu.spdb.entity.Order;
+import com.nstu.spdb.enums.OrderStatus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class OrderDto implements Serializable {
     private Date createDate;
     private Date closeDate;
     private List<CargoDto> cargos;
+    private String statusTitle;
 
     public OrderDto(Order order) {
         if (order == null) {
@@ -27,6 +29,19 @@ public class OrderDto implements Serializable {
         order.getCargos().forEach(cargo -> {
             getCargos().add(new CargoDto(cargo));
         });
+
+        OrderStatus orderStatus = order.getOrderStatus();
+        if (orderStatus != null) {
+            statusTitle = orderStatus.getTitle();
+        }
+    }
+
+    public String getStatusTitle() {
+        return statusTitle;
+    }
+
+    public void setStatusTitle(String statusTitle) {
+        this.statusTitle = statusTitle;
     }
 
     public Long getOrderId() {

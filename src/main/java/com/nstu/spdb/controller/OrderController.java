@@ -2,7 +2,6 @@ package com.nstu.spdb.controller;
 
 import com.nstu.spdb.dto.OrderDto;
 import com.nstu.spdb.entity.Order;
-import com.nstu.spdb.repository.ClientRepository;
 import com.nstu.spdb.repository.OrderRepository;
 import com.nstu.spdb.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,6 @@ public class OrderController {
     @Autowired
     private OrderRepository orderRepository;
 
-    @Autowired
-    private ClientRepository clientRepository;
-
     @GetMapping(value = "order/getOrders")
     public ResponseEntity<List<OrderDto>> getAllOrders() {
         List<Order> orders = orderRepository.findAll();
@@ -36,9 +32,12 @@ public class OrderController {
         }
 
         List<OrderDto> orderDtos = new ArrayList<>(orders.size());
-        orders.forEach(order -> orderDtos.add(new OrderDto(order)));
+        orders.forEach(order -> {
+            orderDtos.add(new OrderDto(order));
 
-        return new ResponseEntity<>(orderDtos, HttpStatus.NOT_FOUND);
+        });
+
+        return new ResponseEntity<>(orderDtos, HttpStatus.OK);
     }
 
     @GetMapping(value = "order/getOrder", produces = "application/json", consumes = "application/json")

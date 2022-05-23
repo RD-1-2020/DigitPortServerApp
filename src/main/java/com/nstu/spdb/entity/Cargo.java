@@ -1,11 +1,10 @@
 package com.nstu.spdb.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table
-public class Cargo extends AbstractPersistableIdentity<Long> implements Serializable {
+public class Cargo extends AbstractPersistableIdentity<Long> {
 
     @Column
     private Long weight;

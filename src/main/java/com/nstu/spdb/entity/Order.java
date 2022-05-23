@@ -1,5 +1,7 @@
 package com.nstu.spdb.entity;
 
+import com.nstu.spdb.enums.OrderStatus;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,8 +22,20 @@ public class Order extends AbstractPersistableIdentity<Long> {
     private Client client;
 
     @OneToMany
-    @JoinColumn(name = "cargos")
+    @JoinColumn
     private List<Cargo> cargos;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
 
     public Date getCreateDate() {
         return createDate;

@@ -7,7 +7,6 @@ import javax.persistence.*;
 @Entity
 @Table
 public class UnloadPlace extends AbstractPersistableIdentity<Long> {
-
     @Column
     @Enumerated(EnumType.STRING)
     private UnloadStatus status;

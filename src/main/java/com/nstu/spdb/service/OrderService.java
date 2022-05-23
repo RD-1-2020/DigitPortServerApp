@@ -5,6 +5,7 @@ import com.nstu.spdb.dto.OrderDto;
 import com.nstu.spdb.entity.Cargo;
 import com.nstu.spdb.entity.Client;
 import com.nstu.spdb.entity.Order;
+import com.nstu.spdb.enums.OrderStatus;
 import com.nstu.spdb.repository.ClientRepository;
 import com.nstu.spdb.repository.OrderRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -80,6 +81,7 @@ public class OrderService {
         order.getCargos().addAll(cargos);
         order.setClient(client);
         order.setCreateDate(new Date());
+        order.setOrderStatus(OrderStatus.IN_WORK);
 
         orderRepository.saveAndFlush(order);
 
@@ -92,5 +94,24 @@ public class OrderService {
         order.setClient(clientRepository.getOne(clientId));
 
         orderRepository.save(order);
+    }
+
+    public void updateOrderStatusIfNeed(Order order) {
+        if (order == null || OrderStatus.READY.equals(order.getOrderStatus())) {
+            return;
+        }
+
+        boolean isReadyOrder = true;
+        for (Cargo cargoFromOrder : order.getCargos()) {
+            if (cargoFromOrder.getInvoice() == null) {
+                isReadyOrder = false;
+                break;
+            }
+        }
+
+        if (isReadyOrder) {
+            order.setOrderStatus(OrderStatus.READY);
+            orderRepository.save(order);
+        }
     }
 }

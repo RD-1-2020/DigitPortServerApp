@@ -1,8 +1,8 @@
 package com.nstu.spdb.entity;
 
-import com.nstu.spdb.enums.InvoiceType;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
@@ -11,10 +11,6 @@ public class Invoice extends AbstractPersistableIdentity<Long> {
 
     @Column
     private String title;
-
-    @Column
-    @Enumerated(EnumType.STRING)
-    private InvoiceType type;
 
     @Column
     private String number;
@@ -36,14 +32,6 @@ public class Invoice extends AbstractPersistableIdentity<Long> {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public InvoiceType getType() {
-        return type;
-    }
-
-    public void setType(InvoiceType type) {
-        this.type = type;
     }
 
     public Date getDateSupply() {
