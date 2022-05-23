@@ -17,6 +17,9 @@ public class ClientDto implements Serializable {
         this.fullName = client.getFullName();
     }
 
+    public ClientDto() {
+    }
+
     public Long getId() {
         return id;
     }

@@ -22,6 +22,9 @@ public class InvoiceDto implements Serializable {
         this.dateSupply = invoice.getDateSupply();
     }
 
+    public InvoiceDto() {
+    }
+
     public String getNumber() {
         return number;
     }

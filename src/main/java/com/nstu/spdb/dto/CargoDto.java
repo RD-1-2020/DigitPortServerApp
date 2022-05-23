@@ -22,6 +22,9 @@ public class CargoDto implements Serializable {
         this.invoice = new InvoiceDto(cargo.getInvoice());
     }
 
+    public CargoDto() {
+    }
+
     public Long getId() {
         return id;
     }

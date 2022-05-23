@@ -36,6 +36,9 @@ public class OrderDto implements Serializable {
         }
     }
 
+    public OrderDto() {
+    }
+
     public String getStatusTitle() {
         return statusTitle;
     }
