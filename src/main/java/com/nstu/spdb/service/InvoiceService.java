@@ -3,6 +3,7 @@ package com.nstu.spdb.service;
 import com.nstu.spdb.dto.InvoiceDto;
 import com.nstu.spdb.entity.Invoice;
 import com.nstu.spdb.repository.InvoiceRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,13 @@ public class InvoiceService {
     public Invoice createAndSave(InvoiceDto invoiceDto) {
         if (invoiceDto == null) {
             return null;
+        }
+
+        if (StringUtils.isNotBlank(invoiceDto.getNumber()) && StringUtils.isNotBlank(invoiceDto.getTitle())) {
+            Invoice invoice = invoiceRepository.getByNumberAndTitle(invoiceDto.getNumber(), invoiceDto.getTitle());
+            if (invoice != null) {
+                return invoice;
+            }
         }
 
         return invoiceRepository.save(createFromDto(invoiceDto));
